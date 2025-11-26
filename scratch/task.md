@@ -1,0 +1,32 @@
+# Recruit Savant MVP Task List
+
+- [x] Project Setup
+    - [x] Initialize Flask project structure
+    - [x] Create requirements.txt
+- [x] Backend Implementation
+    - [x] Implement file upload handling (CSV/XLSX)
+    - [x] Create column mapping logic
+    - [x] Implement data cleaning and type enforcement
+    - [x] Implement percentile calculation engine (Pandas/Numpy)
+        - [x] Handle directionality (Higher/Lower is better)
+        - [x] Handle missing data
+    - [x] Create route for results generation
+- [x] Frontend Implementation
+    - [x] Create upload page (index.html)
+    - [x] Create column mapping interface (mapping.html)
+    - [x] Create results page with Savant color-coded table (results.html)
+    - [x] Add basic CSS for styling
+- [x] Verification
+    - [x] Verify file upload with sample data (Manual)
+    - [x] Verify column mapping functionality (Manual)
+    - [x] Verify percentile calculations and directionality (Code Review/Test Script)
+    - [x] Verify color coding logic (Code Review)
+    - [x] Create README.md
+- [x] Updates
+    - [x] Update TARGET_METRICS to match Savant screenshot
+    - [x] Update Lower-is-Better logic (Swing Length)
+    - [x] Update sample_data.csv
+- [/] Enhancements
+    - [x] Implement Auto-Mapping (Fuzzy Match)
+    - [x] Create Sharing Guide
+    - [ ] Implement Table Sorting (Client-side JS)

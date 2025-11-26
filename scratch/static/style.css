@@ -1,0 +1,133 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+}
+
+select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 300px;
+}
+
+button {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #ecf0f1;
+    font-weight: bold;
+    position: relative;
+    /* For arrow positioning if we used pseudo-elements */
+    user-select: none;
+}
+
+th:hover {
+    background-color: #d0d3d4;
+}
+
+th.asc::after {
+    content: " ▲";
+    font-size: 0.8em;
+}
+
+th.desc::after {
+    content: " ▼";
+    font-size: 0.8em;
+}
+
+.player-name {
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Savant Color Coding */
+.rank-90-100 {
+    background-color: #d32f2f;
+    /* Dark Red */
+    color: white;
+}
+
+.rank-60-89 {
+    background-color: #ef9a9a;
+    /* Light Red */
+    color: black;
+}
+
+.rank-40-59 {
+    background-color: #e0e0e0;
+    /* Neutral/Gray */
+    color: black;
+}
+
+.rank-11-39 {
+    background-color: #90caf9;
+    /* Light Blue */
+    color: black;
+}
+
+.rank-1-10 {
+    background-color: #1976d2;
+    /* Dark Blue */
+    color: white;
+}
+
+.rank-na {
+    background-color: #fff;
+    color: #ccc;
+}

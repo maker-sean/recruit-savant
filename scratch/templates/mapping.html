@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mapping-section">
+    <h2>Map Your Columns</h2>
+    <p>Select the column from your file that corresponds to each Standard Metric.</p>
+    <form action="/calculate" method="post">
+
+        <div class="form-group">
+            <label for="map_Player Name">Player Name (Required)</label>
+            <select name="map_Player Name" required>
+                <option value="" disabled {% if not suggested_mapping.get('Player Name') %}selected{% endif %}>Select
+                    Column...</option>
+                {% for col in columns %}
+                <option value="{{ col }}" {% if suggested_mapping.get('Player Name')==col %}selected{% endif %}>{{ col
+                    }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <hr>
+
+        {% for target in targets %}
+        <div class="form-group">
+            <label for="map_{{ target }}">{{ target }}</label>
+            <select name="map_{{ target }}">
+                <option value="None" {% if not suggested_mapping.get(target) %}selected{% endif %}>-- Skip / Not
+                    Available --</option>
+                {% for col in columns %}
+                <option value="{{ col }}" {% if suggested_mapping.get(target)==col %}selected{% endif %}>{{ col }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-calculate">Calculate Percentiles</button>
+    </form>
+</div>
+{% endblock %}
