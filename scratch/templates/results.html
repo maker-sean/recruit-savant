@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="results-section">
-    <h2>Percentile Rankings</h2>
-    <a href="/" class="btn-new">Start Over</a>
+<div class="results-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+            <h2>Percentile Rankings</h2>
+            <p style="color: #6b7280; margin-top: -10px;">Ranked <strong>{{ players|length }}</strong> Players</p>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <span
+                style="background: #e0e7ff; color: #3730a3; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-right: 10px;">Step
+                3 of 3</span>
+            <a href="/" class="btn secondary">Upload New File</a>
+            <a href="/advanced_analysis" class="btn primary"
+                style="box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">View Synthetic xwOBA &rarr;</a>
+        </div>
+    </div>
 
-    <div class="table-wrapper">
+    <div class="card table-responsive">
         <table>
             <thead>
                 <tr>

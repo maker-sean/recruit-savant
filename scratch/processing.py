@@ -23,7 +23,8 @@ TARGET_METRICS = [
     "Arm Strength",
     "Bat Speed",
     "Squared-up Rate",
-    "Swing Length"
+    "Swing Length",
+    "Contact%"
 ]
 
 # Metrics where Lower is Better (so we invert the rank)
@@ -58,6 +59,25 @@ def clean_data(df):
     For now, we just return the df as is, assuming the user wants to map columns first.
     """
     return df
+
+def clean_numeric_series(series):
+    """
+    Cleans a pandas Series to ensure it's numeric.
+    Handles strings with %, mph, whitespace, etc.
+    """
+    # If already numeric, just coerce to handle mixed types if any
+    if pd.api.types.is_numeric_dtype(series):
+        return pd.to_numeric(series, errors='coerce')
+        
+    # Convert to string, strip whitespace
+    s = series.astype(str).str.strip()
+    
+    # Remove common units
+    s = s.str.replace('%', '', regex=False)
+    s = s.str.replace('mph', '', regex=False, case=False)
+    s = s.str.replace('ft', '', regex=False, case=False)
+    
+    return pd.to_numeric(s, errors='coerce')
 
 def calculate_percentiles(df, mapping):
     """
@@ -94,8 +114,8 @@ def calculate_percentiles(df, mapping):
             result_df[metric] = np.nan
             continue
         
-        # 2. Type Enforcement: Coerce to numeric, errors='coerce' turns non-numbers to NaN
-        series = pd.to_numeric(df[user_col], errors='coerce')
+        # 2. Type Enforcement: Robust cleaning
+        series = clean_numeric_series(df[user_col])
         
         # 3. Percentile Calculation
         # We need 1-100.
@@ -132,3 +152,64 @@ def calculate_percentiles(df, mapping):
         result_df[metric] = (ranks * 100).round(0)
         
     return result_df
+
+def calculate_synthetic_xwoba(df, mapping, weights=None):
+    """
+    Calculates a Synthetic xwOBA based on available metrics.
+    Formula:
+    Base (Default 0.280) 
+    + (BB% * w_bb) 
+    - (K% * w_k) 
+    + ((Max EV - 75) / 35 * w_power) 
+    + ((Contact% - 70) * w_contact)
+    
+    All inputs are expected to be 0-100 scale (e.g. 10.5 for 10.5%).
+    """
+    # Default weights
+    if weights is None:
+        weights = {
+            'w_bb': 0.7,
+            'w_k': 0.7,
+            'w_power': 0.25,
+            'w_contact': 0.2,
+            'base_woba': 0.280
+        }
+        
+    # Create a copy to avoid SettingWithCopy warnings on the original df
+    res = pd.DataFrame(index=df.index)
+    
+    # Helper to get series or 0
+    def get_series(metric_name):
+        col = mapping.get(metric_name)
+        if col and col in df.columns:
+            return clean_numeric_series(df[col]).fillna(0)
+        return pd.Series(0, index=df.index)
+
+    bb_pct = get_series('BB%')
+    k_pct = get_series('K%')
+    max_ev = get_series('Max EV')
+    contact_pct = get_series('Contact%') 
+    
+    # Formula components
+    base_woba = float(weights.get('base_woba', 0.280))
+    w_bb = float(weights.get('w_bb', 0.7))
+    w_k = float(weights.get('w_k', 0.7))
+    w_power = float(weights.get('w_power', 0.25))
+    w_contact = float(weights.get('w_contact', 0.2))
+    
+    # BB Contribution
+    bb_val = (bb_pct / 100.0) * w_bb
+    
+    # K Penalty
+    k_val = (k_pct / 100.0) * w_k
+    
+    # Power: Max EV
+    power_val = ((max_ev - 75) / 35.0) * w_power
+    
+    # Contact
+    # Normalize to 0-1 scale: 70% = 0, 100% = 1
+    contact_val = ((contact_pct - 70) / 30.0) * w_contact
+    
+    syn_xwoba = base_woba + bb_val - k_val + power_val + contact_val
+    
+    return syn_xwoba

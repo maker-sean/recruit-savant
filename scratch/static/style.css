@@ -1,133 +1,212 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    margin: 0;
-    padding: 20px;
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-color: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius: 0.5rem;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
+}
+
+.container,
+.results-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 h1,
+h2,
+h3,
+h4 {
+    color: var(--text-main);
+    margin-top: 0;
+}
+
 h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     text-align: center;
-    color: #2c3e50;
 }
 
+h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+/* Forms */
 .form-group {
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    align-items: center;
+    margin-bottom: 1rem;
 }
 
-select {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: 300px;
-}
-
-button {
+label {
     display: block;
-    width: 200px;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
 }
 
-button:hover {
-    background-color: #2980b9;
-}
-
-table {
+input[type="text"],
+input[type="number"],
+select,
+input[type="file"] {
+    display: block;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 14px;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
 }
 
-th,
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
+.btn.primary,
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
 }
 
-th {
-    background-color: #ecf0f1;
-    font-weight: bold;
-    position: relative;
-    /* For arrow positioning if we used pseudo-elements */
-    user-select: none;
+.btn.primary:hover,
+button[type="submit"]:hover {
+    background-color: var(--primary-hover);
 }
 
-th:hover {
-    background-color: #d0d3d4;
+.btn.secondary {
+    background-color: white;
+    border-color: #d1d5db;
+    color: var(--text-main);
+}
+
+.btn.secondary:hover {
+    background-color: #f9fafb;
+}
+
+
+th.sortable:hover {
+    background-color: #f3f4f6;
 }
 
 th.asc::after {
     content: " ▲";
-    font-size: 0.8em;
 }
 
 th.desc::after {
     content: " ▼";
-    font-size: 0.8em;
 }
 
-.player-name {
-    text-align: left;
+/* Advanced Analysis Grid */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* More space for explanation */
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.infographic-container {
+    text-align: center;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--radius);
+    margin: 1rem 0;
+}
+
+.infographic {
+    max-width: 100%;
+    height: auto;
+}
+
+.formula-text {
+    background: #eef2ff;
+    padding: 1rem;
+    border-radius: var(--radius);
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #3730a3;
+    text-align: center;
+}
+
+.math-term {
     font-weight: bold;
+    color: #1e40af;
 }
 
 /* Savant Color Coding */
 .rank-90-100 {
     background-color: #d32f2f;
-    /* Dark Red */
     color: white;
+    font-weight: bold;
 }
 
 .rank-60-89 {
     background-color: #ef9a9a;
-    /* Light Red */
     color: black;
 }
 
 .rank-40-59 {
     background-color: #e0e0e0;
-    /* Neutral/Gray */
     color: black;
 }
 
 .rank-11-39 {
     background-color: #90caf9;
-    /* Light Blue */
     color: black;
 }
 
 .rank-1-10 {
     background-color: #1976d2;
-    /* Dark Blue */
     color: white;
+    font-weight: bold;
 }
 
 .rank-na {
-    background-color: #fff;
-    color: #ccc;
+    color: #9ca3af;
+}
+
+/* Highlight Metric */
+.highlight-metric {
+    background-color: #ecfdf5;
+    /* Light green bg */
+    color: #047857;
+    font-weight: bold;
+    font-size: 1.1em;
 }
