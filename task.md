@@ -26,7 +26,8 @@
     - [x] Update TARGET_METRICS to match Savant screenshot
     - [x] Update Lower-is-Better logic (Swing Length)
     - [x] Update sample_data.csv
-- [/] Enhancements
+- [x] Enhancements
     - [x] Implement Auto-Mapping (Fuzzy Match)
     - [x] Create Sharing Guide
-    - [ ] Implement Table Sorting (Client-side JS)
+    - [x] Implement Table Sorting (Client-side JS)
+    - [x] UI/UX Improvements (Sticky headers, card layout, step indicators)

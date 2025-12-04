@@ -61,3 +61,17 @@ I created `test_calc.py` to verify the calculation logic.
 1.  Install dependencies: `pip install -r requirements.txt`
 2.  Run the app: `python app.py`
 3.  Upload `sample_data.csv` to see it in action.
+
+## Screen Recordings
+
+### Full End-to-End Demo
+![Full Demo Flow](file:///C:/Users/nsett/.gemini/antigravity/brain/d1063233-4bf6-4aa4-887c-01c2ebf619dc/full_demo_flow_final_1764190203814.webp)
+
+### Final UI Verification
+Verified the complete user flow with the new UI improvements, including:
+- **Step Indicators**: Added "Step 2 of 3" and "Step 3 of 3" labels.
+- **Sticky Headers**: Verified table headers stick to the top when scrolling.
+- **Card Layout**: Confirmed consistent card styling and shadows.
+- **Advanced Analysis**: Verified the side-by-side layout and restored infographics.
+
+![Final UI Verification](/c:/Users/nsett/.gemini/antigravity/brain/d1063233-4bf6-4aa4-887c-01c2ebf619dc/final_ui_verification_complete_success_1764213607589.webp)
