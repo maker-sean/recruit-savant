@@ -1,16 +1,17 @@
-FROM python:3.10
+FROM python:3.10-bullseye
 
-# Install system packages for pandas, numpy, and other scientific libs
+# Install system dependencies for numpy, pandas, scipy
 RUN apt-get update && apt-get install -y \
     build-essential \
+    gfortran \
     gcc \
     g++ \
-    make \
-    libpq-dev \
-    libssl-dev \
+    libatlas-base-dev \
+    liblapack-dev \
+    libblas-dev \
     libffi-dev \
+    libssl-dev \
     python3-dev \
-    python3-distutils \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
