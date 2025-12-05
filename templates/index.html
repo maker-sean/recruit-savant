@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin-top: 50px;">
+    <div class="card">
+        <h2>Upload Hitting Data</h2>
+        <p style="text-align: center; color: #6b7280; margin-bottom: 20px;">Upload your CSV or Excel file to generate
+            Savant-style percentile rankings.</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Select File</label>
+                <input type="file" name="file" id="file" accept=".csv, .xlsx" required>
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%;">Upload File</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+            <h2>Percentile Rankings</h2>
+            <p style="color: #6b7280; margin-top: -10px;">Ranked <strong>{{ players|length }}</strong> Players</p>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <span
+                style="background: #e0e7ff; color: #3730a3; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-right: 10px;">Step
+                3 of 3</span>
+            <a href="/" class="btn secondary">Upload New File</a>
+            <a href="/advanced_analysis" class="btn primary"
+                style="box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">View Synthetic xwOBA &rarr;</a>
+        </div>
+    </div>
+
+    <div class="card table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    {% for metric in metrics %}
+                    <th>{{ metric }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr>
+                    <td class="player-name">{{ player['Player Name'] }}</td>
+                    {% for metric in metrics %}
+                    {% set val = player[metric] %}
+                    {% if val == 'N/A' %}
+                    <td class="rank-na">N/A</td>
+                    {% else %}
+                    {# Determine color class #}
+                    {% if val >= 90 %}
+                    <td class="rank-90-100">{{ val|int }}</td>
+                    {% elif val >= 60 %}
+                    <td class="rank-60-89">{{ val|int }}</td>
+                    {% elif val >= 40 %}
+                    <td class="rank-40-59">{{ val|int }}</td>
+                    {% elif val >= 11 %}
+                    <td class="rank-11-39">{{ val|int }}</td>
+                    {% else %}
+                    <td class="rank-1-10">{{ val|int }}</td>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.querySelector('table');
+        const headers = table.querySelectorAll('th');
+        const tbody = table.querySelector('tbody');
+
+        headers.forEach((header, index) => {
+            header.style.cursor = 'pointer';
+            header.title = "Click to sort";
+
+            header.addEventListener('click', () => {
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const isAscending = header.classList.contains('asc');
+
+                // Reset other headers
+                headers.forEach(h => h.classList.remove('asc', 'desc'));
+
+                // Toggle sort direction
+                if (isAscending) {
+                    header.classList.remove('asc');
+                    header.classList.add('desc');
+                } else {
+                    header.classList.remove('desc');
+                    header.classList.add('asc');
+                }
+
+                const direction = isAscending ? -1 : 1;
+
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.children[index].innerText.trim();
+                    const cellB = rowB.children[index].innerText.trim();
+
+                    // Handle N/A
+                    if (cellA === 'N/A') return 1;
+                    if (cellB === 'N/A') return -1;
+
+                    // Try numeric sort
+                    const numA = parseFloat(cellA);
+                    const numB = parseFloat(cellB);
+
+                    if (!isNaN(numA) && !isNaN(numB)) {
+                        return (numA - numB) * direction;
+                    } else {
+                        // String sort for names
+                        return cellA.localeCompare(cellB) * direction;
+                    }
+                });
+
+                // Re-append rows
+                tbody.innerHTML = '';
+                rows.forEach(row => tbody.appendChild(row));
+            });
+        });
+    });
+</script>
+{% endblock %}
